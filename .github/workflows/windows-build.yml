@@ -1,0 +1,44 @@
+name: Build ChiefExaminer Windows EXE
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout project files
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          if (Test-Path requirements.txt) {
+            pip install -r requirements.txt
+          }
+
+      - name: Clean old builds
+        run: |
+          if (Test-Path build) { Remove-Item build -Recurse -Force }
+          if (Test-Path dist) { Remove-Item dist -Recurse -Force }
+          if (Test-Path ChiefExaminer.spec) { Remove-Item ChiefExaminer.spec -Force }
+
+      - name: Build ChiefExaminer EXE
+        run: |
+          pyinstaller --onefile --name ChiefExaminer --add-data "public;public" --add-data "data;data" --add-data "schema.sql;." server.py
+
+      - name: Upload Windows EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: ChiefExaminer-Windows-EXE
+          path: dist/ChiefExaminer.exe
