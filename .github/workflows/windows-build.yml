@@ -35,6 +35,7 @@ jobs:
 
       - name: Build ChiefExaminer EXE
         run: |
+         cd ChiefExaminer
           pyinstaller --onefile --name ChiefExaminer --add-data "public;public" --add-data "data;data" --add-data "schema.sql;." server.py
 
       - name: Upload Windows EXE
