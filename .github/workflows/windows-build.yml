@@ -34,5 +34,5 @@ jobs:
       - name: Upload EXE
         uses: actions/upload-artifact@v4
         with:
-          name: kyeremeh-Windows-EXE
-          path: ChiefExaminer/dist/kyeremeh.exe
+          name: ChiefExaminer-Windows-EXE
+          path: ChiefExaminer/dist/ChiefExaminer.exe
