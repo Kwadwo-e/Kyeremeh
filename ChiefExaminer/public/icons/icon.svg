@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="ChiefExam">
+  <rect width="512" height="512" rx="96" fill="#21496b"/>
+  <path fill="#0f8f83" d="M88 332h336v68H88z"/>
+  <path fill="#ffffff" d="M126 112h260v60H126zM126 210h260v60H126z"/>
+  <path fill="#ffffff" d="M126 332h118v68H126z" opacity=".92"/>
+  <path fill="#b7791f" d="M286 306l94-94 48 48-94 94z"/>
+</svg>

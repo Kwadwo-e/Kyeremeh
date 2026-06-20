@@ -1,0 +1,52 @@
+{
+  "name": "chiefexam-app",
+  "version": "1.0.0",
+  "description": "ChiefExam desktop installer packaging.",
+  "private": true,
+  "main": "desktop/electron/main.cjs",
+  "scripts": {
+    "desktop:validate": "node --check desktop/electron/main.cjs && node --check public/app.js && node --check public/service-worker.js && python -m py_compile server.py && python -m json.tool public/manifest.webmanifest",
+    "desktop:dev": "electron desktop/electron/main.cjs",
+    "desktop:build:server:win": "python -m PyInstaller --clean --onefile --name chiefexam-server --add-data \"public;public\" --add-data \"schema.sql;.\" server.py",
+    "desktop:build:win": "npm run desktop:build:server:win && electron-builder --win nsis --x64 --publish never"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.kyeremeh.chiefexam",
+    "productName": "ChiefExam",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "desktop/electron/**/*",
+      "!desktop/electron/assets/*.svg"
+    ],
+    "extraResources": [
+      {
+        "from": "dist/chiefexam-server.exe",
+        "to": "backend/chiefexam-server.exe"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "desktop/electron/assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ChiefExam"
+    }
+  }
+}
